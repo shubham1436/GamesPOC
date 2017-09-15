@@ -1,0 +1,18 @@
+version: "2.1"
+
+services:
+    players-app-env:
+        environment:
+            - WEB_DOCUMENT_ROOT=/var/www/web
+            - WEB_DOCUMENT_INDEX=app.php
+            - APP_ENVIRONMENT=dev
+            - APP_SECRET=ThisTokenIsNotSoSecretChangeIt
+            - DATABASE_HOST=players-mysql
+            - DATABASE_PORT=3306
+            - DATABASE_NAME=players
+            - DATABASE_USER=root
+            - DATABASE_PASSWORD=betatest
+            - REDIS_DOCTRINE_METADATA_DSN=players-redis
+            - REDIS_DOCTRINE_RESULT_DSN=players-redis
+            - REDIS_DOCTRINE_QUERY_DSN=players-redis
+            - REDIS_DOCTRINE_SECOND_LEVEL_DSN=players-redis

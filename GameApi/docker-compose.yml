@@ -1,0 +1,51 @@
+version: "2"
+
+services:
+    players-build:
+        build: ./docker/builder
+        networks:
+            - back
+        environment:
+            - ENVIRONMENT=dev
+            - BUILD=true
+            - FIXTURES=false
+        labels:
+            - "traefik.enable=false"
+
+    players-devkit:
+        build: ./docker/builder
+        networks:
+            - back
+        environment:
+            - ENVIRONMENT=dev
+            - BUILD=false
+            - FIXTURES=false
+        entrypoint:
+            - "tail"
+            - "-f"
+            - "/dev/null"
+        labels:
+            - "traefik.enable=false"
+
+    players-app:
+        image: php:7.0-apache
+        volumes:
+            - .:/var/www/html
+        networks:
+            - front
+            - back
+        working_dir: /var/www
+        labels:
+            - "traefik.backend=players"
+            - "traefik.frontend.rule=Host:players.wgp"
+            - "traefik.docker.network=front"
+            - "traefik.port=80"
+
+networks:
+    front:
+        external:
+            name: front
+
+    back:
+        external:
+            name: back

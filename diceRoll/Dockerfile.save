@@ -1,0 +1,18 @@
+#FROM php:7.0-apache
+#COPY . /var/www/html/
+#ADD apache-config.conf /etc/apache2/sites-enabled/000-default.conf
+
+#FROM php:7.0-fpm
+#COPY ./htdocs /usr/src/myapp
+#WORKDIR /usr/src/myapp
+#CMD [ "php", "./login.php" ]
+
+#FROM skiychan/nginx-php7
+
+#ADD htdocs/ /data/www
+
+#ADD nginx.conf /usr/local/nginx/conf/nginx.conf
+
+FROM php:7.0-fpm
+
+ADD htdocs

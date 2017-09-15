@@ -1,0 +1,177 @@
+<?php
+include_once('config.php');
+$id=$_GET['id'];
+session_start();
+ $_SESSION['sessionid']=session_id();
+?>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<head>
+    <title>Dice Simulator 2015</title>
+    <link rel="stylesheet" href="main.css">
+</head>  
+<body>
+ <p id="message"></p>
+ <p id="score"></p>
+
+<div class='dice'>
+  <div class='dice-face'></div>
+  <div class='dice-face'></div>
+  <div class='dice-face'></div>
+  <div class='dice-face'></div>
+  <div class='dice-face'></div>
+  <div class='dice-face'></div>
+</div>
+<input type="hidden" value="" id="dice_val"/>
+  <p id="placeholder">
+  </p>
+  <button id="play" disabled>Roll Dice</button>
+  <button id="replay" style="display:none"> Replay </button>
+  <button id="buy" disabled>Buy Credits</button>
+  <script src="main.js"></script>
+</body>
+<script type="text/javascript">
+userUrl = "<?php echo USER_API_URL; ?>"
+//userUrl="http://10.175.0.218:8000/user";
+gameUrl= "<?php echo GAME_API_URL; ?>"
+//"http://10.175.0.218:8002/game";
+$(document).ready(function(){
+	
+		webUrl = userUrl+"/"+<?php echo $id; ?>;
+		alert(webUrl)
+		$.ajax({
+ 			 url: webUrl,
+ 			 method: "GET",
+ 			 dataType: "json",
+     	 	 success: function(data) {
+     	 	 	if(data.credit > 0){
+                    console.log("here")
+     	 	 		$("#play").prop('disabled', false);
+                    $("#buy").prop('disabled', true);
+     	 	 	}
+     	 	 	else{
+                    $("#play").prop('disabled', true);
+     	 	 		$("#buy").prop('disabled', false);
+     	 	 	}
+     		},
+     	 	 error: function(error) {
+        	 console.log(error)
+     	 	}
+     	});
+          $("#buy").click(function(){
+            alert("1");
+         webUrl = gameUrl+'/credit/'+<?php echo $id; ?>;
+         $.ajax({
+             url: webUrl,
+             method: "POST",
+             //data: { },
+             dataType: "json",
+             success: function(data) {
+               // $("dice_val").val() = data;
+                $("#message").text("Congratulations, you just recharged your account. Begin to play another game. Click Reset");
+                $('#message').fadeIn().delay(5000).fadeOut();
+                $("#play").prop('disabled', false);
+                $("#buy").prop('disabled', true);
+                console.log(data);
+             },
+             error: function(error) {
+                console.log(error)
+            }
+             });
+        });
+        $("#replay").click(function(){
+            $("#play").prop('disabled', true).style('display','block');
+            $("replay").style("display","none");
+            $("#score").text("");
+            $("#play").click();            
+        });
+	$("#play").click(function(){
+    	 webUrl = gameUrl+'/randomnumber/?userid='+<?php echo $id; ?>+'&sessionid='+"<?php echo $_SESSION['sessionid']; ?>";
+    	 $.ajax({
+ 			 url: webUrl,
+ 			 method: "GET",
+ 			 //data: { },
+ 			 dataType: "json",
+     	 	 success: function(data) {
+                if(data.count == -1){
+                    rollthedice(data.number);
+                    $("#message").text("OOPS! you have run out of your chances. Click replay to start it all over again");
+                    $('#message').fadeIn().delay(5000).fadeOut();
+                    $("#play").prop('disabled', true).style('display','none');
+                    $("#score").text(data.score).css('color',"green");
+                     $("replay").style("display","block");
+                    if(data.credit < 1){
+                        $("#play").prop('disabled', true).style('display','none');
+                        $("replay").style("display","block");
+                        $("#buy").prop('disabled', false);
+                        $("#score").text(data.score).css('color',"green");
+                        $("#message").text("OOPS! You just run out of credit. But you were doing good. Click on 'Buy Credits' to add credit to your wallet");
+                        $('#message').fadeIn().delay(5000).fadeOut();
+                     }
+                 }
+                    else if(data.credit < 1){
+                    rollthedice(data.number);
+                    $("#play").prop('disabled', true).style('display','none');
+                    $("replay").style("display","block");
+                    $("#buy").prop('disabled', false);
+                    $("#score").text(data.score).css('color',"green");
+                    $("#message").text("OOPS! You just run out of credit. But you were doing good. Click on 'Buy Credits' to add credit to your wallet");
+                    $('#message').fadeIn().delay(5000).fadeOut();
+
+                }
+                rollthedice(data.number);
+                $("#score").text(data.score).css('color',"green");
+
+
+                console.log(data);
+     		 },
+     	 	 error: function(error) {
+        		console.log(error)
+     	 	}
+     	 });
+
+
+	});
+
+
+    
+
+   
+function rollthedice(val){
+            var faces = document.getElementsByClassName("dice-face");
+
+  for (var fIt = 0; fIt < faces.length; fIt++) {
+    faces[fIt].style.backgroundColor = "white";
+  }
+
+/** This parameter needs to be replaced **/
+  var randFace = val-1; //Math.round(Math.random() * 5);
+
+  /*** This is dynamic***/
+
+  dice.style.left = "50%"; //Math.random() * innerWidth + "px";
+  dice.style.top = "100px"; //Math.random() * innerHeight + "px";
+
+  dice.style.transform =
+    "rotate3d(1, 0, 0, " +
+    Math.random() * 360 +
+    "deg) rotate3d(0, 1, 0, " +
+    Math.random() * 360 +
+    "deg) rotate3d(0, 0, 1, " +
+    Math.random() * 360 +
+    "deg)";
+
+  setTimeout(function() {
+    dice.style.transform = faceRot[randFace];
+    document.getElementsByClassName("dice-face")[
+      randFace
+    ];
+  }, 900);
+        }
+
+	$("#new").click(function(){
+    
+	});
+});	
+</script>
+</html>

@@ -1,0 +1,4 @@
+<?php
+define('USER_API_URL','http://10.175.173.56:8000/user');
+define('GAME_API_URL','http://10.175.173.56:8001/game');
+?>

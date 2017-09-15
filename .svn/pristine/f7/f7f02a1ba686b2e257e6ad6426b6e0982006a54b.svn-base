@@ -1,0 +1,60 @@
+<?php
+?>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<head>
+    <title>Dice Simulator 2015</title>
+    <link rel="stylesheet" href="main.css">
+</head>  
+<body>
+  <p id="placeholder">
+  
+  </p>
+  <button id="button">Roll Dice</button>
+  <script src="main.js"></script>
+</body>
+<script type="text/javascript">
+/* get user credits to decide if user can play the game or has to buy more credits*/
+url="http://10.175.0.218:8000/user";
+$(document).ready(function(){
+	webUrl = url+"/?name="+val
+	$.ajax({
+ 			 url: webUrl,
+ 			 method: "POST",
+ 			 //data: { name : val },
+ 			 dataType: "json",
+     	 	 success: function(data) {
+       			console.log(data);
+     	 	 	window.location.href="index.php?id="+data.id;
+     		 },
+     	 	 error: function(error) {
+        		console.log(error)
+     	 	}
+     	 });
+
+	
+	$("#login").click(function(){
+    	 val = $("#username").val()
+    	 webUrl = url+"/?name="+val
+    	 console.log(webUrl)
+    	 $.ajax({
+ 			 url: webUrl,
+ 			 method: "POST",
+ 			 //data: { name : val },
+ 			 dataType: "json",
+     	 	 success: function(data) {
+       			console.log(data);
+     	 	 	window.location.href="index.php?id="+data.id;
+     		 },
+     	 	 error: function(error) {
+        		console.log(error)
+     	 	}
+     	 });
+	});
+
+	$("#new").click(function(){
+    
+	});
+});	
+</script>
+</html>
