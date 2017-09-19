@@ -62,7 +62,7 @@ function postServiceHandler($url, $data) {
 
 switch($serviceName) {
     case 'userMgmt':
-        $url = 'http://127.0.0.1:8000/user/';
+        $url = "<?php echo USER_API_URL; ?>";
         if($reqType === 'POST') {
             $data = $_POST;
            
@@ -76,7 +76,7 @@ switch($serviceName) {
         }
         break;
       case 'gameApi':
-          $url='http://127.0.0.1:8003/game/';
+          $url="<?php echo GAME_API_URL; ?>";
           if($reqType=='POST'){
                if($_GET['functionName']==='replay'){
                     $url = $url.$_REQUEST['functionName'];
