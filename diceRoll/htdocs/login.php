@@ -74,15 +74,27 @@ User" ></input>
 $(document).ready(function(){
 	//url="http://10.175.0.218:8000/user";
 	$("#login").click(function(){
-    	 val = $("#username").val()
-    	 webUrl = "/ajaxhandler.php?name="+val
+		
+    	 var val = $("#username").val()
+    	 var webUrl = "/ajaxhandler.php?serviceName=userMgmt"
+
+		//  var reqData = {
+		// 	 serviceName: 'login',
+		// 	 data: {
+		// 		 name: val
+		// 	 }
+		//  };
+
     	 console.log(webUrl);
     	 $.ajax({
- 			 url: webUrl,
- 			 method: "POST",
- 			 //data: { name : val },
- 			 dataType: "json",
-     	 	 success: function(data) {
+ 			url: webUrl,
+ 			method: "POST",
+			headers: {
+				 "content-type": "application/x-www-form-urlencoded"
+			},
+			dataType: 'JSON',
+			data: {name: val},
+     	 	success: function(data) {
        			console.log(data);
      	 	 	window.location.href="index.php?id="+data.id;
      		 },
@@ -91,6 +103,24 @@ $(document).ready(function(){
      	 	}
      	 });
 	});
+	// $("#login").click(function(){
+    // 	 val = $("#username").val()
+    // 	 webUrl = "/ajaxhandler.php?name="+val
+    // 	 console.log(webUrl);
+    // 	 $.ajax({
+ 	// 		 url: webUrl,
+ 	// 		 method: "POST",
+ 	// 		 //data: { name : val },
+ 	// 		 dataType: "json",
+    //  	 	 success: function(data) {
+    //    			console.log(data);
+    //  	 	 	window.location.href="index.php?id="+data.id;
+    //  		 },
+    //  	 	 error: function(error) {
+    //     		console.log(error)
+    //  	 	}
+    //  	 });
+	// });
 	$("#new").click(function(){
     
 	});

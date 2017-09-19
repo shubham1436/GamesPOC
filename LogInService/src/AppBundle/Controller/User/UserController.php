@@ -35,11 +35,11 @@ class UserController extends FOSRestController
         $em->persist($data);
         $em->flush();
 
-        /*$curl = curl_init();
+        $curl = curl_init();
 
         curl_setopt_array($curl, array(
             CURLOPT_PORT => "8080",
-            CURLOPT_URL => "http://gameapi:8080/game/?userid=".$data->getId(),
+            CURLOPT_URL => "http://".$this->getParameter('IpAddress')."/game/?userid=".$data->getId(),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -55,7 +55,7 @@ class UserController extends FOSRestController
         $response = curl_exec($curl);
         $err = curl_error($curl);
 
-        curl_close($curl);*/
+        curl_close($curl);
 
 
         return new View($data,Response::HTTP_OK);

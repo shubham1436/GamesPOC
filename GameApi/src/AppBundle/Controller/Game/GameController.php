@@ -140,7 +140,7 @@ class GameController extends FOSRestController
 
             curl_setopt_array($curl, array(
                 CURLOPT_PORT => "8000",
-                CURLOPT_URL => "http://localhost:8000/userupdate/?userid=".$userid."&credit=".$newEntry->getCredit(),
+                CURLOPT_URL => "http://".$this->getParameter('IpAddress')."/userupdate/?userid=".$userid."&credit=".$newEntry->getCredit(),
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -192,7 +192,7 @@ class GameController extends FOSRestController
 
             curl_setopt_array($curl, array(
                 CURLOPT_PORT => "8000",
-                CURLOPT_URL => "http://localhost:8000/userupdate/?userid=".$userid."&credit=".$newCredit,
+                CURLOPT_URL => "http://".$this->getParameter('IpAddress')."/userupdate/?userid=".$userid."&credit=".$newCredit,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -285,7 +285,7 @@ class GameController extends FOSRestController
 
             curl_setopt_array($curl, array(
                 CURLOPT_PORT => "8000",
-                CURLOPT_URL => "http://localhost:8000/userupdate/?userid=".$userid."&credit=".$data['credit'],
+                CURLOPT_URL => "http://".$this->getParameter('IpAddress')."/userupdate/?userid=".$userid."&credit=".$data['credit'],
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,

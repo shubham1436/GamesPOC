@@ -47,14 +47,16 @@ gameUrl= "<?php echo GAME_API_URL; ?>"
 //"http://10.175.0.218:8002/game";
 $(document).ready(function(){
 	/** Check if **/
-		webUrl = userUrl+"/"+<?php echo $id; ?>;
+		// webUrl = userUrl+"/"+<?php echo $id; ?>;
+
+    var webUrl = "/ajaxhandler.php?serviceName=userMgmt"+ '&id=' +<?php echo $id; ?>;
 		$.ajax({
  			 url: webUrl,
  			 method: "GET",
  			 dataType: "json",
      	 	 success: function(data) {
      	 	 	if(data.credit > 0){
-                    alert(data.credit);
+                    //alert(data.credit);
                     console.log(data);
      	 	 		$("#play").prop('disabled', false);
                     $("#buy").prop('disabled', true);
@@ -72,8 +74,10 @@ $(document).ready(function(){
             Store the maxRolls allowed for a game
         **/
         maxcount = gameUrl+"/maxcount";
+        webUrl="/ajaxhandler.php?serviceName=gameApi"+'&functionName=maxcount';
         console.log(maxcount);
-        $.ajax({
+             $.ajax({
+            
              url: webUrl,
              method: "GET",
              dataType: "json",
@@ -89,9 +93,26 @@ $(document).ready(function(){
              console.log(error)
             }
         });
+        // $.ajax({
+        //      url: webUrl,
+        //      method: "GET",
+        //      dataType: "json",
+        //      success: function(data) {
+        //         if(data > 0){
+        //           $("#maxRoll").val(data);
+        //         }
+        //         else{
+        //           $("#maxRoll").val("-1");
+        //         }
+        //     },
+        //      error: function(error) {
+        //      console.log(error)
+        //     }
+        // });
 
           $("#buy").click(function(){
-         webUrl = gameUrl+'/credit/'+<?php echo $id; ?>;
+         //webUrl = gameUrl+'/credit/'+<?php echo $id; ?>;
+          webUrl="/ajaxhandler.php?serviceName=gameApi"+'&functionName=credit&id='+<?php echo $id; ?>;
          $.ajax({
              url: webUrl,
              method: "POST",
@@ -115,7 +136,8 @@ $(document).ready(function(){
         });
 
         $("#replay").click(function(){     
-             webUrl = gameUrl+'/replay/'+"<?php echo $_SESSION['sessionid']; ?>";
+            //webUrl = gameUrl+'/replay/'+"<?php echo $_SESSION['sessionid']; ?>";
+             webUrl="/ajaxhandler.php?serviceName=gameApi&functionName=replay&sessionid="+"<?php echo $_SESSION['sessionid']; ?>";
             $.ajax({
                 url: webUrl,
                 method: "POST",
@@ -136,7 +158,8 @@ $(document).ready(function(){
                    
         });
 	$("#play").click(function(){
-    	 webUrl = gameUrl+'/randomnumber/?userid='+<?php echo $id; ?>+'&sessionid='+"<?php echo $_SESSION['sessionid']; ?>";
+    //  webUrl = gameUrl+'/randomnumber/?userid='+<?php echo $id; ?>+'&sessionid='+"<?php echo $_SESSION['sessionid']; ?>";
+      webUrl="/ajaxhandler.php?serviceName=gameApi"+'&functionName=randomnumber&userid='+<?php echo $id; ?>+'&sessionid='+"<?php echo $_SESSION['sessionid']; ?>";
     	 $.ajax({
  			 url: webUrl,
  			 method: "GET",
@@ -177,6 +200,7 @@ $(document).ready(function(){
                     $("#score").text(data.score);
                     $("#message").text("OOPS! You just run out of credit. Click on 'Buy Credits' to add credit to your wallet");
                     //$('#message').fadeIn().delay(5000).fadeOut();
+
 
                 }
                 else{
