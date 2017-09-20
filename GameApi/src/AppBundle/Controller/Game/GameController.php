@@ -112,15 +112,17 @@ class GameController extends FOSRestController
          * TBD: to put value in rabbit MQ
          */
         if ($service->getScore()+$number>250){
-            $data = [
-                'message'=>"Success",
-                'count'=>$service->getCount(),
-                'number'=>'NULL',
-                'credit' => $service->getCredit(),
-                'score' => $service->getScore(),
-            ];
-
-            return new View($data,Response::HTTP_OK);
+//            $data = [
+//                'message'=>"Success",
+//                'count'=>$service->getCount(),
+//                'number'=>'NULL',
+//                'credit' => $service->getCredit(),
+//                'score' => $service->getScore(),
+//            ];
+//
+//            return new View($data,Response::HTTP_OK);
+            $msg = array('userid' => "Congrats!! Score is gretaer than 10");
+            $this->get('old_sound_rabbit_mq.upload_picture_producer')->publish(serialize($msg));
         }
         /* END*/
         if($service->getSessionid()!= $sessionid ){

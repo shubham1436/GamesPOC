@@ -8,7 +8,6 @@ imports:
 parameters:
     locale: en
 
-
 framework:
     #esi: ~
     #translator: { fallbacks: ['%locale%'] }
@@ -69,29 +68,6 @@ swiftmailer:
     password: '%mailer_password%'
     spool: { type: memory }
 
-# Nelmio CORS Configuration
-nelmio_cors:
-    defaults:
-        allow_credentials: false
-        allow_origin: ['*']
-        allow_headers: ['*']
-        allow_methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
-        max_age: 3600
-        hosts: []
-        origin_regex: false
-
-# FOSRest Configuration
-fos_rest:
-    body_listener: true
-    format_listener:
-        rules:
-            - { path: '^/', priorities: ['json'], fallback_format: json, prefer_extension: false }
-    param_fetcher_listener: true
-    view:
-        view_response_listener: 'force'
-        formats:
-            json: true
-
 old_sound_rabbit_mq:
     connections:
         default:
@@ -109,3 +85,16 @@ old_sound_rabbit_mq:
         upload_picture:
             connection:       default # connects to the default connection configured above
             exchange_options: {name: 'upload-picture1', type: direct}
+    consumers:
+        upload_picture:
+            connection:       default # connects to the default connection configured above
+            exchange_options: {name: 'upload-picture1', type: direct}
+            queue_options:    {name: 'upload-picture1'}
+            callback:         UploadPictureConsumer # the UploadPictureConsumer defined below
+
+# My services
+services:
+   UploadPictureConsumer:
+        class: AppBundle\Controller\UploadPictureConsumer
+
+
