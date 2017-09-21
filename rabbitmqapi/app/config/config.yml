@@ -8,7 +8,6 @@ imports:
 parameters:
     locale: en
 
-
 framework:
     #esi: ~
     #translator: { fallbacks: ['%locale%'] }
@@ -91,21 +90,3 @@ fos_rest:
         view_response_listener: 'force'
         formats:
             json: true
-
-old_sound_rabbit_mq:
-    connections:
-        default:
-            host:     'rabbitmq' # hostname and port of the rabbitmq server
-            port:     5672
-            user:     'guest'
-            password: 'guest'
-            vhost:    '/'
-            lazy:     true # a lazy connection avoids unnecessary connections to the broker on every request
-            connection_timeout: 60
-            read_write_timeout: 60
-            keepalive: false
-            heartbeat: 30
-    producers:
-        upload_picture:
-            connection:       default # connects to the default connection configured above
-            exchange_options: {name: 'upload-picture1', type: direct}

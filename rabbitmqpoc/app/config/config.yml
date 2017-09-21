@@ -71,7 +71,7 @@ swiftmailer:
 old_sound_rabbit_mq:
     connections:
         default:
-            host:     'localhost' # hostname and port of the rabbitmq server
+            host:     'rabbitmq' # hostname and port of the rabbitmq server
             port:     5672
             user:     'guest'
             password: 'guest'
