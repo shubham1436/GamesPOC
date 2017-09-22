@@ -10,5 +10,5 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: d176143f73b558f5f3bef0385685833530f496cc
-    IpAddress: loginservice:80
+    IpAddress: loginservice:8000
 

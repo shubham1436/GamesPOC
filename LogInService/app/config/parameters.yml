@@ -10,4 +10,4 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: 36b87878341c32af307cb59bd92703d764516aa8
-    IpAddress: gameapi:80
+    IpAddress: gameapi:8000

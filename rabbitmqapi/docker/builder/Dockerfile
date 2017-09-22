@@ -47,3 +47,5 @@ RUN composer install
 
 #ENTRYPOINT ["/docker/builder/builder.sh"]
 
+CMD ["/var/www/bin/console", "server:run", "0.0.0.0:8000"]
+

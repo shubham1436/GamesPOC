@@ -29,15 +29,17 @@ WORKDIR /var/www
 
 RUN chmod +x /var/www/bin/console
 
+RUN chmod +x -R /var/www/docker/builder
+
 RUN composer install
 
 #RUN php bin/console doctrine:database:drop --force
 
-RUN php bin/console doctrine:database:create --if-not-exists
+#RUN php bin/console doctrine:database:create --if-not-exists
 
-RUN php bin/console cache:clear
+#RUN php bin/console cache:clear
 
-RUN php bin/console doctrine:schema:update --force
+#RUN php bin/console doctrine:schema:update --force
 
 #RUN php bin/console doctrine:generate:entity --entity Game
 
@@ -46,4 +48,9 @@ RUN php bin/console doctrine:schema:update --force
 #RUN chmod +x -R /builder
 
 #ENTRYPOINT ["/docker/builder/builder.sh"]
+
+ENTRYPOINT ["/var/www/docker/builder/startup.sh"] 
+#&& /bin/bash
+
+CMD ["/var/www/bin/console", "server:run", "0.0.0.0:8000"]
 

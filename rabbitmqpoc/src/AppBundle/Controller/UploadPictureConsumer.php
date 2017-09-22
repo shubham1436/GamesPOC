@@ -35,7 +35,7 @@ class UploadPictureConsumer implements ConsumerInterface
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_PORT => "8003",
-            CURLOPT_URL => "http://rabbitmqapi:80/rabbit/?msg=".$userid,
+            CURLOPT_URL => "http://rabbitmqapi:8000/rabbit/?msg=".$userid,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,

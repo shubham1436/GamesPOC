@@ -29,6 +29,8 @@ WORKDIR /var/www
 
 RUN chmod +x /var/www/bin/console
 
+RUN chmod +x -R /var/www/docker/builder
+
 RUN composer install
 
 #RUN php bin/console doctrine:database:drop --force
@@ -46,4 +48,6 @@ RUN composer install
 #RUN chmod +x -R /builder
 
 #ENTRYPOINT ["/docker/builder/builder.sh"]
+
+CMD ["/var/www/bin/console", "rabbitmq:consumer", "upload_picture"]
 
